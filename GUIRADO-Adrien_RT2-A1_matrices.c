@@ -25,10 +25,10 @@ void aff(double** mat, int m, int n){
 }
 
 double** addi(double** mat1, int m1, int n1,double** mat2, int m2, int n2){
-        double** a=create_tab(m1,n1);
-        for(int x=0;x<m1;x++) for(int y=0;y<n1;y++) a[x][y]=mat1[x][y]+mat2[x][y];
-        return(a);
-        delete_tab(a,m1);
+    double** a=create_tab(m1,n1);
+    for(int x=0;x<m1;x++) for(int y=0;y<n1;y++) a[x][y]=mat1[x][y]+mat2[x][y];
+    return a;
+    delete_tab(a,m1);
 }
 
 double trace(double** mat1, int m1){
@@ -41,18 +41,18 @@ double** sous_mat(double** mat, int m, int n, int ligne,int colonne){
     double** T=create_tab(m-1,n-1);
     int a=0,b=0;
     for(int x=0;x<m;x++){
-            if(x != ligne){
-                b=0;
-                    for(int y=0;y<m;y++){
-                            if(y != colonne){
-                                    T[a][b]=mat[x][y];
-                                    b++;
-                            }
-                    }
-                a++;
+        if(x != ligne){
+            b=0;
+            for(int y=0;y<m;y++){
+                if(y != colonne){
+                    T[a][b]=mat[x][y];
+                    b++;
+                }
             }
+            a++;
+        }
     }
-    return(T);
+    return T;
     delete_tab(T,m-1);
 }
 
@@ -68,7 +68,7 @@ double det(double** mat, int m){
             }
         }
         delete_tab(aa,m-1);
-        return(u);
+        return u;
     }
 }
 
