@@ -114,6 +114,22 @@ int division(double *ta, int a,double *ta2, int b, double *quotient, double *res
     }
 }
 
+void saisie(int *test, double *a, int s){
+    while(*test != 0 && *test != 1){
+        printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
+        scanf("%d",&*test);
+    }
+    if(*test==1)
+        remp(a,s,-10,10);
+    else{
+        for(int y=0;y<s;y++){
+            printf("x^%d : ",s-y-1);
+            scanf("%lf",&a[y]);
+        }
+    }
+}
+
+
 int main(){
 
     srand(time(NULL));
@@ -132,19 +148,8 @@ int main(){
                 printf("Affichage polynome :\n\nDegre du polynome : ");
                 scanf("%d",&a_s);
                 a_s++;
-                while(aff_test != 0 && aff_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&aff_test);
-                }
                 double a[a_s];
-                if(aff_test==1)
-                    remp(a,a_s,-10,10);
-                else{
-                    for(int y=0;y<a_s;y++){
-                        printf("x^%d : ",a_s-y-1);
-                        scanf("%lf",&a[y]);
-                    }
-                }
+                saisie(&aff_test,a,a_s);
                 aff(a,a_s);
                 printf("\n\n");
 
@@ -153,29 +158,18 @@ int main(){
 
             case 2:
             {
-                int b_s=0,eval_test=2,c1=0;
+                int b_s=0,eval_test=2;
                 printf("Evaluation polynome :\n\nDegre du polynome : ");
                 scanf("%d",&b_s);
                 b_s++;
-                while(eval_test != 0 && eval_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&eval_test);
-                }
-                double b[b_s],res_eval=0;
-                if(eval_test==1)
-                    remp(b,b_s,-10,10);
-                else{
-                    for(int y=0;y<b_s;y++){
-                        printf("x^%d : ",b_s-y-1);
-                        scanf("%lf",&b[y]);
-                    }
-                }
+                double b[b_s],res_eval=0,c1=0;
+                saisie(&eval_test,b,b_s);
                 printf("\n");
                 aff(b,b_s);
                 printf("\n\nValeur de x : ");
-                scanf("%d",&c1);
+                scanf("%lf",&c1);
                 eval(b,b_s,c1,&res_eval);
-                printf("\n\nEval en x = %d : %g\n\n\n",c1,res_eval);
+                printf("\n\nEval en x = %g : %g\n\n\n",c1,res_eval);
 
                 break;
             }
@@ -186,19 +180,8 @@ int main(){
                 printf("Derivee polynome :\n\nDegre du polynome : ");
                 scanf("%d",&c_s);
                 c_s++;
-                while(deriv_test != 0 && deriv_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&deriv_test);
-                }
                 double c[c_s],d[c_s-1];
-                if(deriv_test==1)
-                    remp(c,c_s,-10,10);
-                else{
-                    for(int y=0;y<c_s;y++){
-                        printf("x^%d : ",c_s-y-1);
-                        scanf("%lf",&c[y]);
-                    }
-                }
+                saisie(&deriv_test,c,c_s);
                 deriv(c,c_s,d);
                 printf("Polynome :\n\n");
                 aff(c,c_s);
@@ -215,36 +198,14 @@ int main(){
                 scanf("%d",&f_s);
                 f_s++;
                 double f[f_s];
-                while(add_test != 0 && add_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&add_test);
-                }
-                if(add_test==1)
-                    remp(f,f_s,-10,10);
-                else{
-                    for(int y=0;y<f_s;y++){
-                        printf("x^%d : ",f_s-y-1);
-                        scanf("%lf",&f[y]);
-                    }
-                }
+                saisie(&add_test,f,f_s);
                 printf("\nPolynome A :\n");
                 aff(f,f_s);
                 printf("\n\nDegre polynome B : ");
                 scanf("%d",&g_s);
                 g_s++;
                 double g[g_s];
-                while(add_test2 != 0 && add_test2 != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&add_test2);
-                }
-                if(add_test2==1)
-                    remp(g,g_s,-10,10);
-                else{
-                    for(int y=0;y<g_s;y++){
-                        printf("x^%d : ",g_s-y-1);
-                        scanf("%lf",&g[y]);
-                    }
-                }
+                saisie(&add_test2,g,g_s);
                 int add_s=0;
                 if(f_s>g_s)
                     add_s=f_s;
@@ -268,37 +229,14 @@ int main(){
                 scanf("%d",&i_s);
                 i_s++;
                 double i[i_s];
-                while(mul_test != 0 && mul_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&mul_test);
-                }
-                if(mul_test==1)
-                    remp(i,i_s,-10,10);
-                else{
-                    for(int y=0;y<i_s;y++){
-                        printf("x^%d : ",i_s-y-1);
-                        scanf("%lf",&i[y]);
-                    }
-                }
+                saisie(&mul_test,i,i_s);
                 printf("\nPolynome A :\n");
                 aff(i,i_s);
                 printf("\n\nDegre polynome B : ");
                 scanf("%d",&j_s);
                 j_s++;
                 double j[j_s];
-                while(mul_test2 != 0 && mul_test2 != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&mul_test2);
-                }
-                if(mul_test2==1)
-                    remp(j,j_s,-10,10);
-                else{
-                    for(int y=0;y<j_s;y++){
-                        printf("x^%d : ",j_s-y-1);
-                        scanf("%lf",&j[y]);
-                    }
-                }
-
+                saisie(&mul_test2,j,j_s);
                 int mul_s=i_s+j_s-1;
                 double ks[mul_s];
                 mul(i,i_s,j,j_s,ks);
@@ -318,36 +256,14 @@ int main(){
                 scanf("%d",&m_s);
                 m_s++;
                 double m[m_s],reste[m_s];
-                while(div_test != 0 && div_test != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&div_test);
-                }
-                if(div_test==1)
-                    remp(m,m_s,-10,10);
-                else{
-                    for(int y=0;y<m_s;y++){
-                        printf("x^%d : ",m_s-y-1);
-                        scanf("%lf",&m[y]);
-                    }
-                }
+                saisie(&div_test,m,m_s);
                 printf("\nPolynome A :\n");
                 aff(m,m_s);
                 printf("\n\nDegre polynome B : ");
                 scanf("%d",&n_s);
                 n_s++;
                 double n[n_s];
-                while(div_test2 != 0 && div_test2 != 1){
-                    printf("\nPolynome aleatoire ? (1=oui et 0=non) : ");
-                    scanf("%d",&div_test2);
-                }
-                if(div_test2==1)
-                    remp(n,n_s,-10,10);
-                else{
-                    for(int y=0;y<n_s;y++){
-                        printf("x^%d : ",n_s-y-1);
-                        scanf("%lf",&n[y]);
-                    }
-                }
+                saisie(&div_test2,n,n_s);
                 printf("\n\nPolynome B :\n");
                 aff(n,n_s);
                 printf("\n");
