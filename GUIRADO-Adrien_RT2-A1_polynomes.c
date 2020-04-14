@@ -272,7 +272,7 @@ int main(){
                 if(test_res=division(m,m_s,n,n_s,quotient,reste)){
                     switch(test_res){
                         case 1:
-                            printf("\nErreur : le degre du diviseur est superieur a celui du dividende\n\n");
+                            printf("\nErreur : Deb B > Deg A\n\n");
                             break;
                         case 2:
                             printf("\nErreur : division par 0\n\n");
