@@ -18,11 +18,25 @@ double facto_rec(double n){
 
 int main(){
 
-    printf("GUIRADO Adrien - RT2 A1\n\nNombre : ");
+    printf("GUIRADO Adrien - RT2 A1\n\n");
 
-    int i=0;
-    scanf("%d",&i);
-    printf("%d! par la maniere iterative : %g\n\n%d! par la maniere recursive : %g\n\n",i,facto_ite(i),i,facto_rec(i));
+    int i=0,t=0;
+    while(i != -1){
+        printf("Nombre (-1 pour quitter) : ");
+        scanf("%d",&i);
+        t=2;
+        if(i>=0){
+            while(t!=0 && t!=1){
+                printf("\nFacon (0=ite et 1=rec) : ");
+                scanf("%d",&t);
+            }
+            if(t)
+                printf("%lf\n",facto_rec(i));
+            else
+                printf("%lf\n",facto_ite(i));
+            printf("\n");
+        }
+    }
 
     return 0;
 }
