@@ -32,7 +32,7 @@ int main(){
 
     printf("GUIRADO Adrien - RT2 A1\n\n");
 
-    double d=-5,f=7.5,p=0.5,i=211.8;
+    double d=-5,f=7.5,p=0.5,r=rec(d,f,p),t=tra(d,f,p),i=211.8;
     int n=(f-d)/p;
 
     printf("Exemple :\n\n\
@@ -45,7 +45,7 @@ Methode des rectangles = %g\n\n\
 Pourcentage d'erreur = ((%g-%g)*100)/%g = (%g*100)/%g = %g/%g = %g pourcents\n\n\
 Methode des trapezes = %g\n\n\
 Pourcentage d'erreur = ((%g-%g)*100)/%g = (%g*100)/%g = %g/%g = %g pourcents\n\n"
-,d,f,p,f,d,p,f-d,p,n,i,rec(d,f,p),i,rec(d,f,p),i,i-rec(d,f,p),i,(i-rec(d,f,p))*100,i,((i-rec(d,f,p))*100)/i,tra(d,f,p),i,tra(d,f,p),i,i-tra(d,f,p),i,(i-tra(d,f,p))*100,i,((i-tra(d,f,p))*100)/i);
+,d,f,p,f,d,p,f-d,p,n,i,r,i,r,i,i-r,i,(i-r)*100,i,((i-r)*100)/i,t,i,t,i,i-t,i,(i-t)*100,i,((i-t)*100)/i);
 
     return 0;
 }
