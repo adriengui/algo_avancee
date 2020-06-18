@@ -18,7 +18,7 @@ double facto_rec(double n){
 
 int main(){
 
-    printf("GUIRADO Adrien - RT2 A1\n\n");
+    printf("GUIRADO Adrien - RT2 A1\n\nFactorielles\n\n");
 
     int i=0,t=0;
     while(i != -1){
@@ -31,11 +31,11 @@ int main(){
                 scanf("%d",&t);
             }
             if(t)
-                printf("%lf\n",facto_rec(i));
+                printf("\n%d! = %lf\n",i,facto_rec(i));
             else
-                printf("%lf\n",facto_ite(i));
-            printf("\n");
+                printf("\n%d! = %lf\n",i,facto_ite(i));
         }
+        printf("\n");
     }
 
     return 0;
