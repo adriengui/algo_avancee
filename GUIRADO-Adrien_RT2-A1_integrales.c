@@ -27,13 +27,13 @@ double tra(double deb, double fin, double pas){
 
 int main(){
 
-    printf("GUIRADO Adrien - RT2 A1\n\n");
+    printf("GUIRADO Adrien - RT2 A1\n\nCalcul d'integrales\n\n");
 
     double a=0,b=0,p=1,r=0,t=0,i=0;
     int n=0;
 
-    printf("Exemple :\n\nf(x) = x^2*ln(x+10)-20\n\
-Df = ]-10 ; + infini[\n\n");
+    printf("f(x) = x^2*ln(x+10)-20\n\
+Df = ]-10 ; + infini[\n\n\n");
 
     while(p != 0){
         printf("A : ");
@@ -43,7 +43,7 @@ Df = ]-10 ; + infini[\n\n");
         printf("\nPas (0 pour quitter) : ");
         scanf("%lf",&p);
         printf("\n");
-        if(p>0 && a>-10 && b>-10 && a != b){
+        if(p>0 && a>-10 && b>-10 && a < b){
             r=rec(a,b,p);
             t=tra(a,b,p);
             i=(b*(3*pow(b,2)*log(b+10)-pow(b,2)+15*b-480)-a*(3*pow(a,2)*log(a+10)-pow(a,2)+15*a-480)+3000*(log(b+10)-log(a+10)))/9;
@@ -56,7 +56,7 @@ Integrale calculee = %g\n\n\n\
 Methode des rectangles = %g\n\n\
 Pourcentage d'erreur = ((%g - %g)*100)/%g = %g pourcents\n\n\n\
 Methode des trapezes = %g\n\n\
-Pourcentage d'erreur = ((%g - %g)*100)/%g = %g pourcents\n\n"
+Pourcentage d'erreur = ((%g - %g)*100)/%g = %g pourcents\n\n\n"
 ,a,b,p,b,a,p,n,i,r,i,r,i,((i-r)*100)/i,t,i,t,i,((i-t)*100)/i);
         }
     }
