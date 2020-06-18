@@ -3,18 +3,10 @@
 
 double f(double x){
     return(20*(x-2)*exp(x-2)+2);
-    // return(-5*pow(x,2)-3*x+8);
-    // return((15/exp(x))*log(x)-0.5);
-    // return(pow(x,3)+pow(x,2)-5*x);
-    // return(sqrt(x));
 }
 
 double fp(double x){
     return(20*(x-1)*exp(x-2));
-    // return(-10*x-3);
-    // return((15-15*x*log(x))/(x*exp(x)));
-    // return(3*pow(x,2)+2*x-5);
-    // return(1/(2*sqrt(x)));
 }
 
 void tang(){
@@ -35,15 +27,15 @@ void tang(){
             x++;
         }
         if(x<50)
-            printf("\n\n%d\n%lf\n\n",x,b);
+            printf("\n%d iterations\n\nx = %lf\n\n\n",x,b);
         else
-            printf("\n\nNon trouve\n\n");
+            printf("\nNon trouve\n\n\n");
     }
 }
 
 int main(){
 
-    printf("GUIRADO Adrien - RT2 A1\n\nMethode des tangentes\n\n");
+    printf("GUIRADO Adrien - RT2 A1\n\nMethode des tangentes\n\nf(x)=20(x-2)e^(x-2)+2\n\n\n");
 
     tang();
 
