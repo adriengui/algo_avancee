@@ -3,28 +3,44 @@
 #include <math.h>
 #include <time.h>
 
-void aff(double *tab, int a){
+int deg(double *t, int a){
     int z=0;
     for(int x=0;x<a;x++){
         z++;
-        if(tab[x]!=0)
+        if(t[x]!=0)
             break;
     }
-    int zz=a-z+1;
-    double tab2[zz];
-    for(int x=0;x<zz;x++)
-        tab2[x]=tab[a-zz+x];
-    int b=0;
-    for(int x=0;x<zz;x++){
-        if(tab2[x]!=0){
-            b=zz-x-1;
-            if(tab2[x]>0 && x>0)
-                printf("+");
-            printf("%g",tab2[x]);
-            if(b>1)
-                printf("x%d",b);
-            else if(b==1)
-                printf("x");
+    return a-z;
+}
+
+void aff(double *tab, int a){
+    if(deg(tab,a)==0 && tab[a-1]==0)
+        printf("0");
+    else{
+        int z=deg(tab,a)+1;
+        double tab2[z];
+        for(int x=0;x<z;x++)
+            tab2[x]=tab[a-z+x];
+        int b=0;
+        for(int x=0;x<z;x++){
+            if(tab2[x]!=0){
+                b=z-x-1;
+                if(tab2[x]>0 && x>0)
+                    printf("+");
+                if(tab2[x]==-1)
+                    if(x==z-1)
+                        printf("-1");
+                    else
+                        printf("-");
+                else if(tab2[x]!=1 && b<z)
+                    printf("%g",tab2[x]);
+                else if(x==z-1 && tab2[x]==1)
+                    printf("1");
+                if(b>1)
+                    printf("x^%d",b);
+                else if(b==1)
+                    printf("x");
+            }
         }
     }
 }
@@ -36,21 +52,9 @@ int pos(double *t, int a){
     return i;
 }
 
-int deg(double *t, int a){
-    int z=0;
-    for(int x=0;x<a;x++){
-        z++;
-        if(t[x]!=0)
-            break;
-    }
-    return a-z;
-}
-
-void eval(double *tab, int a, double x, double *res0){
-    double res=0;
+void eval(double *tab, int a, double x, double *res){
     for(int y=0;y<a;y++)
-        res+=tab[y]*pow(x,a-y-1);
-    *res0=res;
+        *res+=tab[y]*pow(x,a-y-1);
 }
 
 void deriv(double *tab, int a, double *res){
@@ -94,21 +98,27 @@ int division(double *ta, int a,double *ta2, int b, double *quotient, double *res
     else if(deg(ta2,b)==0 && ta2[b-1]==0)
         return 2;
     else{
-        int l=deg(ta,a)-deg(ta2,b)+1,la1=deg(ta,a)+1,la2=deg(ta2,b)+1;
-        double tab[la1],tab2[la2];
-        for(int x=0;x<la1;x++) tab[x]=ta[x+pos(ta,a)];
-        for(int x=0;x<la2;x++) tab2[x]=ta2[x+pos(ta2,b)];
-        double tabbis[la1],quobis[l];
-        for(int x=0;x<l;x++){
-            for(int u=0;u<l;u++) quobis[u]=0;
-            quotient[x]=tab[la1-deg(tab,la1)-1]/tab2[0];
-            quobis[x]=quotient[x];
-            mul(tab2,la2,quobis,l,tabbis);
-            for(int y=0;y<la1;y++) tabbis[y]=-tabbis[y];
-            for(int z=0;z<la1;z++) tab[z]+=tabbis[z];
+        if(deg(ta,a)==0 && ta[a-1]==0){
+            for(int x=0;x<deg(ta,a)-deg(ta2,b)+1;x++) quotient[x]=0;
+            for(int x=0;x<a;x++) reste[x]=0;
         }
-        for(int x=0;x<a;x++) reste[x]=0;
-        for(int x=0;x<la1;x++) reste[a-la1+x]=tab[x];
+        else{
+            int l=deg(ta,a)-deg(ta2,b)+1,la1=deg(ta,a)+1,la2=deg(ta2,b)+1;
+            double tab[la1],tab2[la2];
+            for(int x=0;x<la1;x++) tab[x]=ta[x+pos(ta,a)];
+            for(int x=0;x<la2;x++) tab2[x]=ta2[x+pos(ta2,b)];
+            double tabbis[la1],quobis[l];
+            for(int x=0;x<l;x++){
+                for(int u=0;u<l;u++) quobis[u]=0;
+                quotient[x]=tab[x]/tab2[0];
+                quobis[x]=quotient[x];
+                mul(tab2,la2,quobis,l,tabbis);
+                for(int y=0;y<la1;y++) tabbis[y]=-tabbis[y];
+                for(int z=0;z<la1;z++) tab[z]+=tabbis[z];
+            }
+            for(int x=0;x<a;x++) reste[x]=0;
+            for(int x=0;x<la1;x++) reste[a-la1+x]=tab[x];
+        }
 
         return 0;
     }
@@ -129,27 +139,46 @@ void saisie(int *test, double *a, int s){
     }
 }
 
+void dim(int *t, char a){
+    while(*t<0){
+        printf("\nDeg %c : ",a);
+        scanf("%d",&*t);
+    }
+}
+
+void menu(){
+        printf("\nOperations :\n\n\
+1 : Affichage polynome\n\
+2 : Evaluation polynome\n\
+3 : Derivee polynome\n\
+4 : Somme polynomes\n\
+5 : Produit polynomes\n\
+6 : Division polynomes\n");
+}
+
 
 int main(){
 
     srand(time(NULL));
 
-    printf("GUIRADO Adrien - RT2 A1\n\nCalculs sur les polynomes\n\nOperations :\n\n1 : Affichage polynome\n2 : Evaluation polynome\n3 : Derivee polynome\n4 : Somme polynomes\n5 : Produit polynomes\n6 : Division polynomes\n\n");
+    printf("GUIRADO Adrien - RT2 A1\n\nOperations sur les polynomes\n\n");
 
     int k=1;
 
     while(k != 0){
-        printf("Operation souhaitee (0 pour quitter) : ");
+        menu();
+        printf("\nOperation souhaitee (0 pour quitter) : ");
         scanf("%d",&k);
         switch(k){
             case 1:
             {
-                int a_s=0,aff_test=2;
-                printf("Affichage polynome :\n\nDegre du polynome : ");
-                scanf("%d",&a_s);
+                int a_s=-1,aff_test=2;
+                printf("Affichage polynome :\n");
+                dim(&a_s,'A');
                 a_s++;
                 double a[a_s];
                 saisie(&aff_test,a,a_s);
+                printf("\nA = ");
                 aff(a,a_s);
                 printf("\n\n");
 
@@ -158,51 +187,55 @@ int main(){
 
             case 2:
             {
-                int b_s=0,eval_test=2;
-                printf("Evaluation polynome :\n\nDegre du polynome : ");
-                scanf("%d",&b_s);
+                int b_s=-1,eval_test=2;
+                printf("Evaluation polynome :\n");
+                dim(&b_s,'A');
                 b_s++;
                 double b[b_s],res_eval=0,c1=0;
                 saisie(&eval_test,b,b_s);
-                printf("\n");
+                printf("\nA = ");
                 aff(b,b_s);
-                printf("\n\nValeur de x : ");
+                printf("\n\nx0 : ");
                 scanf("%lf",&c1);
                 eval(b,b_s,c1,&res_eval);
-                printf("\n\nEval en x = %g : %g\n\n\n",c1,res_eval);
+                printf("\n\nA(%g) = %g\n\n\n",c1,res_eval);
 
                 break;
             }
 
             case 3:
             {
-                int c_s=0,deriv_test=2;
-                printf("Derivee polynome :\n\nDegre du polynome : ");
-                scanf("%d",&c_s);
-                c_s++;
-                double c[c_s],d[c_s-1];
-                saisie(&deriv_test,c,c_s);
-                deriv(c,c_s,d);
-                printf("Polynome :\n\n");
-                aff(c,c_s);
-                printf("\nDerivee : \n\n");
-                aff(d,c_s-1);
-                printf("\n\n");
+                int c_s=-1,deriv_test=2;
+                printf("Derivee polynome :\n");
+                dim(&c_s,'A');
+                if(c_s==0)
+                    printf("Derivee nulle\n");
+                else{
+                    c_s++;
+                    double c[c_s],d[c_s-1];
+                    saisie(&deriv_test,c,c_s);
+                    deriv(c,c_s,d);
+                    printf("\nA = ");
+                    aff(c,c_s);
+                    printf("\n\nA' = ");
+                    aff(d,c_s-1);
+                    printf("\n\n");
+                }
                 break;
             }
 
             case 4:
             {
-                int f_s=0,g_s=0,add_test=2,add_test2=2;
-                printf("\n\nSomme de 2 polynomes :\n\nDegre polynome A : ");
-                scanf("%d",&f_s);
+                int f_s=-1,g_s=-1,add_test=2,add_test2=2;
+                printf("\n\nSomme de 2 polynomes :\n");
+                dim(&f_s,'A');
                 f_s++;
                 double f[f_s];
                 saisie(&add_test,f,f_s);
-                printf("\nPolynome A :\n");
+                printf("\nA = ");
                 aff(f,f_s);
-                printf("\n\nDegre polynome B : ");
-                scanf("%d",&g_s);
+                printf("\n");
+                dim(&g_s,'B');
                 g_s++;
                 double g[g_s];
                 saisie(&add_test2,g,g_s);
@@ -213,9 +246,9 @@ int main(){
                     add_s=g_s;
                 double h[add_s];
                 addi(f,f_s,g,g_s,h);
-                printf("\n\nPolynome B :\n");
+                printf("\nB = ");
                 aff(g,g_s);
-                printf("\n\nA + B :\n");
+                printf("\n\nA + B = ");
                 aff(h,add_s);
                 printf("\n\n");
 
@@ -224,25 +257,25 @@ int main(){
 
             case 5:
             {
-                int i_s=0,j_s=0,mul_test=2,mul_test2=2;
-                printf("\n\nProduit de 2 polynomes :\n\nDegre polynome A : ");
-                scanf("%d",&i_s);
+                int i_s=-1,j_s=-1,mul_test=2,mul_test2=2;
+                printf("\n\nProduit de 2 polynomes :\n");
+                dim(&i_s,'A');
                 i_s++;
                 double i[i_s];
                 saisie(&mul_test,i,i_s);
-                printf("\nPolynome A :\n");
+                printf("\nA = ");
                 aff(i,i_s);
-                printf("\n\nDegre polynome B : ");
-                scanf("%d",&j_s);
+                printf("\n");
+                dim(&j_s,'B');
                 j_s++;
                 double j[j_s];
                 saisie(&mul_test2,j,j_s);
                 int mul_s=i_s+j_s-1;
                 double ks[mul_s];
                 mul(i,i_s,j,j_s,ks);
-                printf("\n\nPolynome B :\n");
+                printf("\nB = ");
                 aff(j,j_s);
-                printf("\n\nA x B :\n");
+                printf("\n\nA x B = ");
                 aff(ks,mul_s);
                 printf("\n\n");
 
@@ -251,20 +284,20 @@ int main(){
 
             case 6:
             {
-                int m_s=0,n_s=0,div_test=2,div_test2=2;
-                printf("\n\nDivision de 2 polynomes :\n\nDegre polynome A : ");
-                scanf("%d",&m_s);
+                int m_s=-1,n_s=-1,div_test=2,div_test2=2;
+                printf("\n\nDivision de 2 polynomes :\n");
+                dim(&m_s,'A');
                 m_s++;
                 double m[m_s],reste[m_s];
                 saisie(&div_test,m,m_s);
-                printf("\nPolynome A :\n");
+                printf("\nA = ");
                 aff(m,m_s);
-                printf("\n\nDegre polynome B : ");
-                scanf("%d",&n_s);
+                printf("\n");
+                dim(&n_s,'B');
                 n_s++;
                 double n[n_s];
                 saisie(&div_test2,n,n_s);
-                printf("\n\nPolynome B :\n");
+                printf("\n\nB = ");
                 aff(n,n_s);
                 printf("\n");
                 int cc2=deg(m,m_s)-deg(n,n_s)+1,test_res=0;
@@ -280,9 +313,9 @@ int main(){
                     }
                 }
                 else{
-                    printf("\nQuotient :\n");
+                    printf("\nQ = ");
                     aff(quotient,cc2);
-                    printf("\n\nReste :\n");
+                    printf("\n\nR = ");
                     aff(reste,m_s);
                     printf("\n\n");
                 }
