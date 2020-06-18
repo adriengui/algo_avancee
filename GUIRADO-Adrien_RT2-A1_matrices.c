@@ -165,6 +165,7 @@ int main(){
                 aff(a,aa1,aa2);
                 printf("\n\n");
                 delete_tab(a,aa1);
+
                 break;
             }
             case 2:
@@ -189,6 +190,7 @@ int main(){
                 delete_tab(b,a12);
                 delete_tab(c,a12);
                 delete_tab(d,a12);
+
                 break;
             }
             case 3:
@@ -251,7 +253,6 @@ int main(){
                 det(i,d1,d1,&deter);
                 printf("\nDeterminant : %lf\n\n",deter);
                 delete_tab(i,d1);
-                printf("\n");
 
                 break;
             }
