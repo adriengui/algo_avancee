@@ -2,9 +2,6 @@
 #include <math.h>
 
 double f(double x){
-    // return(2*pow(x,5)+3*pow(x,3)-4*pow(x,2)+1);
-    // return(pow(x,3)-5*x);
-    // return(2*pow(x,3)-5*pow(x,2)+2);
     return(pow(x,2)*log(x+10)-20);
 }
 
@@ -32,20 +29,37 @@ int main(){
 
     printf("GUIRADO Adrien - RT2 A1\n\n");
 
-    double d=-5,f=7.5,p=0.5,r=rec(d,f,p),t=tra(d,f,p),i=211.8;
-    int n=(f-d)/p;
+    double a=0,b=0,p=1,r=0,t=0,i=0;
+    int n=0;
 
-    printf("Exemple :\n\n\
-f(x) = x^2*ln(x+10)-20\n\
-Intervalle = %g ; %g\n\
+    printf("Exemple :\n\nf(x) = x^2*ln(x+10)-20\n\
+Df = ]-10 ; + infini[\n\n");
+
+    while(p != 0){
+        printf("A : ");
+        scanf("%lf",&a);
+        printf("\nB : ");
+        scanf("%lf",&b);
+        printf("\nPas (0 pour quitter) : ");
+        scanf("%lf",&p);
+        printf("\n");
+        if(p>0 && a>-10 && b>-10 && a != b){
+            r=rec(a,b,p);
+            t=tra(a,b,p);
+            i=(b*(3*pow(b,2)*log(b+10)-pow(b,2)+15*b-480)-a*(3*pow(a,2)*log(a+10)-pow(a,2)+15*a-480)+3000*(log(b+10)-log(a+10)))/9;
+            n=(b-a)/p;
+
+            printf("Intervalle = %g ; %g\n\
 Pas = %g\n\
-Nb d'iterations = (%g - %g)/%g = %g/%g = %d\n\n\
-Integrale calculee = %g\n\n\
+Nb d'iterations = (%g - %g)/%g = %d\n\n\
+Integrale calculee = %g\n\n\n\
 Methode des rectangles = %g\n\n\
-Pourcentage d'erreur = ((%g-%g)*100)/%g = (%g*100)/%g = %g/%g = %g pourcents\n\n\
+Pourcentage d'erreur = ((%g - %g)*100)/%g = %g pourcents\n\n\n\
 Methode des trapezes = %g\n\n\
-Pourcentage d'erreur = ((%g-%g)*100)/%g = (%g*100)/%g = %g/%g = %g pourcents\n\n"
-,d,f,p,f,d,p,f-d,p,n,i,r,i,r,i,i-r,i,(i-r)*100,i,((i-r)*100)/i,t,i,t,i,i-t,i,(i-t)*100,i,((i-t)*100)/i);
+Pourcentage d'erreur = ((%g - %g)*100)/%g = %g pourcents\n\n"
+,a,b,p,b,a,p,n,i,r,i,r,i,((i-r)*100)/i,t,i,t,i,((i-t)*100)/i);
+        }
+    }
 
     return 0;
 }
